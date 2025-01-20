@@ -1,0 +1,16 @@
+# Ignorar arquivos e diretórios específicos
+node_modules/
+dist/
+build/
+
+# Ignorar logs
+*.log
+
+# Ignorar arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar IDEs/editores
+.vscode/
+.idea/
+*.iml

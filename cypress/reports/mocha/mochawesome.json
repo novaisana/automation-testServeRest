@@ -1,0 +1,170 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-01-20T18:10:16.369Z",
+    "end": "2025-01-20T18:10:18.951Z",
+    "duration": 2582,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "8b3a6e4c-ecb7-4b66-a3c0-4cc047290970",
+      "title": "",
+      "fullFile": "cypress\\e2e\\api\\api_tests.cy.js",
+      "file": "cypress\\e2e\\api\\api_tests.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "b08ded02-886a-4abc-aad4-34ac11a4d87b",
+          "title": "API Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "realizar login valido",
+              "fullTitle": "API Tests realizar login valido",
+              "timedOut": null,
+              "duration": 701,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: `${apiUrl}/login`,\n  body: {\n    email: 'Gilvano@qa.com.br',\n    password: 'Gilvano123'\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property('message', 'Login realizado com sucesso');\n  expect(response.body).to.have.property('authorization');\n});",
+              "err": {},
+              "uuid": "5d987b9e-686d-4ab0-b4a0-5c26a3568cf2",
+              "parentUUID": "b08ded02-886a-4abc-aad4-34ac11a4d87b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "realizar login invalido",
+              "fullTitle": "API Tests realizar login invalido",
+              "timedOut": null,
+              "duration": 211,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: `${apiUrl}/login`,\n  body: {\n    email: 'invalid@qa.com.br',\n    password: 'invalid123'\n  },\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.eq(401);\n  expect(response.body).to.have.property('message', 'Email e/ou senha inválidos');\n});",
+              "err": {},
+              "uuid": "e4d266e4-cc51-4eea-87d9-1c4526438dab",
+              "parentUUID": "b08ded02-886a-4abc-aad4-34ac11a4d87b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "criar e deletar novo usuario",
+              "fullTitle": "API Tests criar e deletar novo usuario",
+              "timedOut": null,
+              "duration": 896,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Criar novo usuario\ncy.request({\n  method: 'POST',\n  url: `${apiUrl}/usuarios`,\n  body: {\n    nome: \"Test User\",\n    email: \"testuser@qa.com.br\",\n    password: \"TestUser123\",\n    administrador: \"false\"\n  }\n}).then(response => {\n  expect(response.status).to.eq(201);\n  const userId = response.body._id;\n  // Verificar usuario criado\n  cy.request({\n    method: 'GET',\n    url: `${apiUrl}/usuarios/${userId}`,\n    headers: {\n      Authorization: authToken\n    }\n  }).then(response => {\n    expect(response.status).to.eq(200);\n    expect(response.body).to.have.property('_id', userId);\n    expect(response.body).to.have.property('nome', 'Test User');\n    // Deletar usuario\n    cy.request({\n      method: 'DELETE',\n      url: `${apiUrl}/usuarios/${userId}`,\n      headers: {\n        Authorization: authToken\n      }\n    }).then(response => {\n      expect(response.status).to.eq(200);\n      expect(response.body).to.have.property('message', 'Registro excluído com sucesso');\n      // Verificar usuario deletado\n      cy.request({\n        method: 'GET',\n        url: `${apiUrl}/usuarios/${userId}`,\n        failOnStatusCode: false,\n        headers: {\n          Authorization: authToken\n        }\n      }).then(response => {\n        expect(response.status).to.eq(400);\n      });\n    });\n  });\n});",
+              "err": {},
+              "uuid": "c05cff9f-941a-4517-97c1-67c666b268a6",
+              "parentUUID": "b08ded02-886a-4abc-aad4-34ac11a4d87b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "criar e deletar produto",
+              "fullTitle": "API Tests criar e deletar produto",
+              "timedOut": null,
+              "duration": 668,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Criar novo produto\ncy.request({\n  method: 'POST',\n  url: `${apiUrl}/produtos`,\n  body: {\n    nome: 'Notebook AOC',\n    descricao: 'Notebook AOC 256SSD 8GB RAM',\n    preco: 5000,\n    quantidade: 10\n  },\n  headers: {\n    Authorization: authToken\n  }\n}).then(response => {\n  expect(response.status).to.eq(201);\n  const productId = response.body._id;\n  // Verificar produto criado\n  cy.request({\n    method: 'GET',\n    url: `${apiUrl}/produtos/${productId}`,\n    headers: {\n      Authorization: authToken\n    }\n  }).then(response => {\n    expect(response.status).to.eq(200);\n    expect(response.body).to.have.property('_id', productId);\n    expect(response.body).to.have.property('nome', 'Notebook AOC');\n    // Deletar produto\n    cy.request({\n      method: 'DELETE',\n      url: `${apiUrl}/produtos/${productId}`,\n      headers: {\n        Authorization: authToken\n      }\n    }).then(response => {\n      expect(response.status).to.eq(200);\n      expect(response.body).to.have.property('message', 'Registro excluído com sucesso');\n    });\n  });\n});",
+              "err": {},
+              "uuid": "1e4154d7-9bb9-48fe-8e5c-bd015fffd478",
+              "parentUUID": "b08ded02-886a-4abc-aad4-34ac11a4d87b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "5d987b9e-686d-4ab0-b4a0-5c26a3568cf2",
+            "e4d266e4-cc51-4eea-87d9-1c4526438dab",
+            "c05cff9f-941a-4517-97c1-67c666b268a6",
+            "1e4154d7-9bb9-48fe-8e5c-bd015fffd478"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2476,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reporterEnabled": "mochawesome",
+        "mochawesomeReporterOptions": {
+          "reportDir": "cypress/reports/mocha",
+          "quiet": true,
+          "overwrite": false,
+          "html": false,
+          "json": true
+        },
+        "reportDir": "cypress/reports/mocha",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
