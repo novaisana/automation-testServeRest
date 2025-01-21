@@ -1,10 +1,10 @@
 {
-  "name": "automation",
+  "name": "projeto-automacao",
   "version": "1.0.0",
-  "description": "",
+  "description": "Projeto de automação com Cypress",
   "main": "index.js",
   "scripts": {
-    "clean:reports": "if exist cypress\\reports (rmdir /S /Q cypress\\reports) && mkdir cypress\\reports && mkdir cypress\\reports\\mocha && mkdir cypress\\reports\\mochareports",
+    "clean:reports": "node -e \"const fs = require('fs'); const path = require('path'); const reportsDir = path.join(__dirname, 'cypress', 'reports'); if (fs.existsSync(reportsDir)) { fs.rmdirSync(reportsDir, { recursive: true }); }\"",
     "create:dirs": "mkdir cypress\\reports && mkdir cypress\\reports\\mocha && mkdir cypress\\reports\\mochareports",
     "pretest": "npm run clean:reports && npm run create:dirs",
     "scripts": "cypress run --reporter mochawesome --reporter-options reportDir=cypress/reports/mocha,overwrite=false,html=false,json=true",
@@ -17,8 +17,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "cypress": "^14.0.0",
+  "dependencies": {
+    "cypress": "^9.0.0",
     "mochawesome": "^6.2.2",
     "mochawesome-merge": "^4.2.0",
     "mochawesome-report-generator": "^5.2.0"
