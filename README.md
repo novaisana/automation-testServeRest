@@ -15,14 +15,15 @@ Clone o repositório:
 
 Instale as dependências:
 
+``` npm install cypress --save-dev ```
+
 ``` npm install ```
 
+``` npm install --save-dev cypress-file-upload ```
+
+
+
 ## Configuração
-Crie um arquivo .env na raiz do projeto com as seguintes variáveis:
-
-``` CYPRESS_USERNAME=testeqa@qa.com.br ```
-
-``` CYPRESS_PASSWORD=testeqa123 ```
 
 Certifique-se de que o arquivo ```cypress.config.js``` está configurado corretamente para o ambiente de testes.
 
